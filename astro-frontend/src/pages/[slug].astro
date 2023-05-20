@@ -1,0 +1,34 @@
+---
+import { getAllPagesWithSlugs, getPageBySlug } from '../lib/api';
+// import { request } from "@astrojs/http";
+
+
+export async function getStaticPaths() {
+  const pagesWithSlugs = await getAllPagesWithSlugs();
+  return pagesWithSlugs.edges.map(({ node }: { node: { slug: string } }) => {
+    return {
+      params: { slug: node.slug },
+    };
+  });
+}
+
+const { slug } = Astro.params;
+const page = await getPageBySlug(slug);
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{page.title}</title>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" type="text/css" href="../styles/global.css" />
+  </head>
+  <body>
+    <div class="flex flex-col p-10">
+      <div class="mb-5 text-4xl font-bold">{page.title}</div>
+      <article class="prose lg:prose-xl">
+        {page.content}
+      </article>
+    </div>
+  </body>
+</html>
