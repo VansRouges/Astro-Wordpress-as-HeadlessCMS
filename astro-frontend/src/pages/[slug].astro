@@ -1,7 +1,7 @@
 ---
 import { getAllPagesWithSlugs, getPageBySlug } from '../lib/api';
 // import { request } from "@astrojs/http";
-
+import Header from '../components/Header.astro';
 
 export async function getStaticPaths() {
   const pagesWithSlugs = await getAllPagesWithSlugs();
@@ -24,9 +24,10 @@ const page = await getPageBySlug(slug);
     <link rel="stylesheet" type="text/css" href="../styles/global.css" />
   </head>
   <body>
+    <!-- <Header /> -->
     <div class="flex flex-col p-10">
       <div class="mb-5 text-4xl font-bold">{page.title}</div>
-      <article class="prose lg:prose-xl">
+      <article class="">
         {page.content}
       </article>
     </div>
